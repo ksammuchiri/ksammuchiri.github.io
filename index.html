@@ -62,7 +62,7 @@ nav.solid{background:rgba(247,245,241,.92);backdrop-filter:blur(8px);color:var(-
 
 /* hero */
 .hero{min-height:100vh;display:flex;flex-direction:column;justify-content:center;padding-top:96px}
-.hero-foot{display:flex;justify-content:space-between;align-items:flex-end;gap:32px;margin-top:clamp(56px,10vh,120px);flex-wrap:wrap}
+.hero-foot{display:flex;flex-direction:column;align-items:flex-start;gap:28px;margin-top:clamp(48px,8vh,96px)}
 .hero-foot p{max-width:620px;color:#cfcac2}
 .btn{display:inline-block;border:1px solid currentColor;padding:13px 20px;font-size:12px;letter-spacing:.18em;text-transform:uppercase;text-decoration:none;font-weight:500;transition:background .2s,color .2s}
 .dark .btn:hover{background:var(--light);color:var(--ink)}
@@ -107,6 +107,16 @@ td:first-child{font-weight:500;white-space:nowrap}
 footer{background:var(--ink);color:#8d8a84;font-size:12px;letter-spacing:.14em;text-transform:uppercase;padding:0 0 32px}
 footer .wrap{display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap}
 
+/* hydrangeas */
+.hydrangea-canvas{position:fixed;inset:0;width:100vw;height:100vh;pointer-events:none;z-index:5}
+.hy{position:absolute;pointer-events:none}
+.hy-hero{right:-60px;top:calc(50% - 90px);width:500px;height:500px;transform:translateY(-50%)}
+.hy-about{right:-110px;bottom:20px;width:320px;height:320px}
+.hy-work{left:-90px;bottom:-70px;width:300px;height:300px}
+.hy-nda{left:calc(var(--pad) + 30px);bottom:40px;width:260px;height:260px}
+.hy-contact{right:-10px;top:-40px;width:400px;height:400px}
+@media (max-width:900px){.hy-hero{right:-40px;top:auto;bottom:-50px;transform:none;width:210px;height:210px}.hy-contact{right:-80px;top:-60px;width:260px;height:260px}}
+
 /* reveal */
 .rv{opacity:0;transform:translateY(24px);transition:opacity .8s ease,transform .8s ease}
 .rv.in{opacity:1;transform:none}
@@ -134,6 +144,7 @@ footer .wrap{display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap}
 
 <!-- HERO -->
 <section class="dark hero" id="top">
+  <div class="hy hy-hero" data-hydrangea data-stem="on" data-tilt="0.1"></div>
   <div class="geo" style="right:-140px;top:50%;transform:translateY(-50%)" aria-hidden="true"><svg width="760" height="760" viewBox="0 0 760 760" fill="none" stroke="#f2efe9">
     <circle cx="380" cy="380" r="120" opacity=".16"/><circle cx="380" cy="380" r="200" opacity=".16"/><circle cx="380" cy="380" r="280" opacity=".16"/><circle cx="380" cy="380" r="360" opacity=".16"/>
     <line x1="380" y1="0" x2="380" y2="760" opacity=".12"/><line x1="0" y1="380" x2="760" y2="380" opacity=".12"/>
@@ -150,6 +161,7 @@ footer .wrap{display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap}
 
 <!-- ABOUT -->
 <section class="white" id="about">
+  <div class="hy hy-about" data-hydrangea data-hydrangea-mobile="off" data-tilt="0.2"></div>
   <div class="wrap g2">
     <div class="rv">
       <div class="eyebrow">About</div>
@@ -181,6 +193,7 @@ footer .wrap{display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap}
 
 <!-- INDEX -->
 <section id="work">
+  <div class="hy hy-work" data-hydrangea data-hydrangea-mobile="off" data-tilt="-0.1"></div>
   <div class="wrap g-side">
     <div class="rv">
       <div class="eyebrow">Selected work</div>
@@ -345,6 +358,7 @@ footer .wrap{display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap}
 
 <!-- NDA -->
 <section id="nda">
+  <div class="hy hy-nda" data-hydrangea data-hydrangea-mobile="off"></div>
   <div class="wrap g-side">
     <div class="rv">
       <div class="eyebrow">Not shown publicly</div>
@@ -368,6 +382,7 @@ footer .wrap{display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap}
 
 <!-- CONTACT -->
 <section class="dark" id="contact" style="padding-bottom:64px">
+  <div class="hy hy-contact" data-hydrangea data-hydrangea-mobile="off" data-stem="on" data-tilt="0.25"></div>
   <div class="geo" style="right:-160px;top:-160px" aria-hidden="true"><svg width="640" height="640" viewBox="0 0 640 640" fill="none" stroke="#f2efe9"><circle cx="320" cy="320" r="110" opacity=".14"/><circle cx="320" cy="320" r="170" opacity=".14"/><circle cx="320" cy="320" r="230" opacity=".14"/><circle cx="320" cy="320" r="290" opacity=".14"/><circle cx="320" cy="320" r="50" fill="#f2efe9" stroke="none" opacity=".9"/></svg></div>
   <div class="wrap" style="position:relative">
     <div class="eyebrow">Let&rsquo;s talk</div>
@@ -394,5 +409,7 @@ window.addEventListener('scroll',navState,{passive:true});navState();
 if('IntersectionObserver' in window){var io=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target)}})},{threshold:.12});
 document.querySelectorAll('.rv').forEach(function(el){io.observe(el)})}else{document.querySelectorAll('.rv').forEach(function(el){el.classList.add('in')})}
 </script>
+<script type="importmap">{"imports":{"three":"./assets/vendor/three.module.min.js"}}</script>
+<script type="module" src="assets/hydrangea.js"></script>
 </body>
 </html>
