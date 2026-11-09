@@ -1,0 +1,398 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Samuel Muchiri — Product Design Lead &amp; UX Strategist</title>
+<meta name="description" content="Samuel Muchiri is a Nairobi-based Product Design Lead and UX Strategist with 8+ years designing and reviewing digital platforms in digital health, government, fintech and AI.">
+<meta property="og:title" content="Samuel Muchiri — Product Design Lead & UX Strategist">
+<meta property="og:description" content="Product design, independent UX reviews and front-end build. Nairobi, working worldwide.">
+<meta property="og:image" content="assets/img/ard_hero.jpg">
+<link rel="preload" href="assets/fonts/cormorant-garamond-latin-500-normal.woff2" as="font" type="font/woff2" crossorigin>
+<style>
+@font-face{font-family:'Cormorant';src:url(assets/fonts/cormorant-garamond-latin-500-normal.woff2) format('woff2');font-weight:500;font-display:swap}
+@font-face{font-family:'Cormorant';src:url(assets/fonts/cormorant-garamond-latin-500-italic.woff2) format('woff2');font-weight:500;font-style:italic;font-display:swap}
+@font-face{font-family:'OutfitW';src:url(assets/fonts/outfit-latin-300-normal.woff2) format('woff2');font-weight:300;font-display:swap}
+@font-face{font-family:'OutfitW';src:url(assets/fonts/outfit-latin-400-normal.woff2) format('woff2');font-weight:400;font-display:swap}
+@font-face{font-family:'OutfitW';src:url(assets/fonts/outfit-latin-500-normal.woff2) format('woff2');font-weight:500;font-display:swap}
+
+:root{--ink:#111;--mute:#6b6b6b;--line:#d9d6d0;--paper:#f7f5f1;--white:#fff;--light:#f2efe9;--pad:clamp(20px,5.5vw,80px)}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+body{font-family:'OutfitW',system-ui,sans-serif;color:var(--ink);background:var(--paper);-webkit-font-smoothing:antialiased}
+img{display:block;max-width:100%;height:auto}
+a{color:inherit}
+.serif,h1,h2,h3{font-family:'Cormorant',Georgia,serif;font-weight:500;letter-spacing:-.01em}
+h1{font-size:clamp(64px,12vw,170px);line-height:.9}
+h2{font-size:clamp(38px,5vw,64px);line-height:1.04;margin-bottom:22px}
+h3{font-size:clamp(28px,3vw,40px);line-height:1.1;margin-bottom:14px}
+p{font-size:17px;line-height:1.65;font-weight:300}
+p+p{margin-top:14px}
+.lead{font-size:clamp(18px,1.6vw,21px);line-height:1.55}
+.small{font-size:14.5px;line-height:1.6}
+.eyebrow,.label{font-size:12px;letter-spacing:.2em;text-transform:uppercase;color:var(--mute);font-weight:500}
+.eyebrow{margin-bottom:18px}
+.label{margin-bottom:6px}
+.wrap{max-width:1440px;margin:0 auto;padding:0 var(--pad)}
+section{padding:clamp(72px,10vw,130px) 0;position:relative;overflow:hidden}
+.white{background:var(--white)}
+.dark{background:var(--ink);color:var(--light)}
+.dark .eyebrow,.dark .label{color:#a19d96}
+.rule{height:1px;background:var(--line);margin:24px 0}
+.dark .rule{background:#333}
+ul.clean{list-style:none}
+ul.clean li{font-size:16px;line-height:1.5;font-weight:300;padding:7px 0 7px 20px;position:relative}
+ul.clean li:before{content:"";position:absolute;left:0;top:18px;width:9px;height:1px;background:currentColor}
+.tag{display:inline-block;border:1px solid var(--line);padding:6px 11px;font-size:11.5px;letter-spacing:.12em;text-transform:uppercase;margin:0 6px 8px 0;font-weight:500}
+.caption{font-size:12.5px;letter-spacing:.04em;color:var(--mute);margin-top:10px}
+.geo{position:absolute;pointer-events:none}
+.g2{display:grid;grid-template-columns:1fr 1fr;gap:clamp(32px,6vw,90px)}
+.g-side{display:grid;grid-template-columns:minmax(280px,420px) 1fr;gap:clamp(32px,5vw,72px);align-items:start}
+.meta{display:grid;grid-template-columns:1fr 1fr;gap:18px 24px;margin-top:28px}
+
+/* nav */
+nav{position:fixed;top:0;left:0;right:0;z-index:10;transition:background .3s,color .3s}
+nav .wrap{display:flex;justify-content:space-between;align-items:center;height:64px}
+nav .brand{font-family:'Cormorant',serif;font-size:22px;text-decoration:none}
+nav ul{display:flex;gap:28px;list-style:none}
+nav a{text-decoration:none;font-size:12px;letter-spacing:.18em;text-transform:uppercase;font-weight:500}
+nav.on-dark{color:var(--light)}
+nav.solid{background:rgba(247,245,241,.92);backdrop-filter:blur(8px);color:var(--ink);border-bottom:1px solid var(--line)}
+
+/* hero */
+.hero{min-height:100vh;display:flex;flex-direction:column;justify-content:center;padding-top:96px}
+.hero-foot{display:flex;justify-content:space-between;align-items:flex-end;gap:32px;margin-top:clamp(56px,10vh,120px);flex-wrap:wrap}
+.hero-foot p{max-width:620px;color:#cfcac2}
+.btn{display:inline-block;border:1px solid currentColor;padding:13px 20px;font-size:12px;letter-spacing:.18em;text-transform:uppercase;text-decoration:none;font-weight:500;transition:background .2s,color .2s}
+.dark .btn:hover{background:var(--light);color:var(--ink)}
+.btn:hover{background:var(--ink);color:var(--white)}
+
+/* work index */
+.idx a{display:grid;grid-template-columns:70px 1fr auto;align-items:baseline;padding:22px 0;border-bottom:1px solid var(--line);text-decoration:none;transition:padding .2s}
+.idx a:first-child{border-top:1px solid var(--line)}
+.idx a:hover{padding-left:10px}
+.idx .n{font-family:'Cormorant',serif;font-size:28px}
+.idx .t{font-family:'Cormorant',serif;font-size:clamp(26px,2.6vw,34px)}
+
+/* case blocks */
+.case-hero{display:grid;grid-template-columns:minmax(300px,520px) 1fr;gap:clamp(32px,5vw,72px);align-items:center}
+.imgbox{background:#efece6;overflow:hidden}
+.pair{display:grid;grid-template-columns:300px 1fr;gap:24px;align-items:center}
+.flow{background:#fff;padding:10px 14px}
+.launch{grid-template-columns:1fr minmax(240px,340px);align-items:center}
+.case-hero.bw{grid-template-columns:1fr minmax(300px,560px)}
+.cols3{display:grid;grid-template-columns:repeat(3,1fr);gap:28px;margin-top:28px}
+
+/* method */
+.steps{display:grid;grid-template-columns:1fr 1fr;gap:28px 36px}
+.steps .num{font-family:'Cormorant',serif;font-size:46px;line-height:1;color:#bdb7ad}
+.steps b{display:block;font-weight:500;margin:6px 0 4px}
+table{width:100%;min-width:640px;border-collapse:collapse;font-size:14.5px;font-weight:300}
+th{text-align:left;padding:10px 12px 10px 0;border-bottom:1px solid var(--ink)}
+td{padding:12px 12px 12px 0;border-bottom:1px solid var(--line);vertical-align:top}
+td:first-child{font-weight:500;white-space:nowrap}
+.table-scroll{overflow-x:auto}
+
+/* NDA grid */
+.nda{display:grid;grid-template-columns:repeat(3,1fr);border-top:1px solid var(--ink)}
+.nda>div{padding:22px 22px 22px 0;border-bottom:1px solid var(--line)}
+.nda>div:not(:nth-child(3n+1)){padding-left:22px;border-left:1px solid var(--line)}
+.nda .serif{font-size:26px;margin:4px 0 6px}
+
+/* contact */
+.contact-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:40px;border-top:1px solid #333;padding-top:26px;margin-top:clamp(56px,9vw,110px)}
+.contact-grid a{text-decoration:none;font-size:clamp(18px,1.8vw,24px)}
+.contact-grid a:hover{text-decoration:underline}
+footer{background:var(--ink);color:#8d8a84;font-size:12px;letter-spacing:.14em;text-transform:uppercase;padding:0 0 32px}
+footer .wrap{display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap}
+
+/* reveal */
+.rv{opacity:0;transform:translateY(24px);transition:opacity .8s ease,transform .8s ease}
+.rv.in{opacity:1;transform:none}
+@media (prefers-reduced-motion:reduce){.rv{opacity:1;transform:none;transition:none}}
+
+@media (max-width:900px){
+  nav ul{gap:16px} nav ul li:nth-child(n+3){display:none}
+  .g2,.g-side,.case-hero,.case-hero.bw,.launch,.pair,.steps,.cols3{grid-template-columns:1fr}
+  .nda{grid-template-columns:1fr}
+  .nda>div,.nda>div:not(:nth-child(3n+1)){padding:20px 0;border-left:none}
+  .contact-grid{grid-template-columns:1fr;gap:22px}
+  .idx a{grid-template-columns:48px 1fr}
+  .idx .label{display:none}
+  .geo{display:none}
+  .order-first{order:-1}
+}
+</style>
+</head>
+<body>
+
+<nav id="nav" class="on-dark"><div class="wrap">
+  <a href="#top" class="brand">Samuel Muchiri</a>
+  <ul><li><a href="#work">Work</a></li><li><a href="#contact">Contact</a></li><li><a href="#method">Method</a></li><li><a href="assets/Samuel_Muchiri_Portfolio_2026.pdf" download>PDF</a></li></ul>
+</div></nav>
+
+<!-- HERO -->
+<section class="dark hero" id="top">
+  <div class="geo" style="right:-140px;top:50%;transform:translateY(-50%)" aria-hidden="true"><svg width="760" height="760" viewBox="0 0 760 760" fill="none" stroke="#f2efe9">
+    <circle cx="380" cy="380" r="120" opacity=".16"/><circle cx="380" cy="380" r="200" opacity=".16"/><circle cx="380" cy="380" r="280" opacity=".16"/><circle cx="380" cy="380" r="360" opacity=".16"/>
+    <line x1="380" y1="0" x2="380" y2="760" opacity=".12"/><line x1="0" y1="380" x2="760" y2="380" opacity=".12"/>
+    <rect x="320" y="320" width="120" height="120" opacity=".3"/><circle cx="380" cy="380" r="5" fill="#f2efe9" stroke="none" opacity=".7"/></svg></div>
+  <div class="wrap" style="position:relative">
+    <div class="eyebrow">Product Design · UX Strategy · Front-End</div>
+    <h1>Samuel<br>Muchiri</h1>
+    <div class="hero-foot">
+      <p class="lead">Product Design Lead and UX Strategist. Eight years designing and reviewing digital platforms for national health systems, government, fintech and AI products across Kenya, Ethiopia, Botswana and the United States.</p>
+      <div style="display:flex;gap:12px;flex-wrap:wrap"><a class="btn" href="#work">See the work</a><a class="btn" href="mailto:samu625@gmail.com">Get in touch</a></div>
+    </div>
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section class="white" id="about">
+  <div class="wrap g2">
+    <div class="rv">
+      <div class="eyebrow">About</div>
+      <h2>I design products people can actually use, and I review the ones that aren&rsquo;t there yet.</h2>
+      <p>I take products from research and information architecture through to high-fidelity prototypes and developer handoff. Because I also write front-end code, my recommendations come with a clear view of how they will be built.</p>
+      <p>Much of my work is for users who are easy to design badly for: field health workers on low-bandwidth phones, land surveyors working offline, clinicians in busy facilities, and citizens using government services for the first time.</p>
+      <p>Today I lead UX consulting engagements, from platform reviews and pre-build assessments to full redesigns, alongside product design for growing businesses.</p>
+    </div>
+    <div class="rv">
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:28px">
+        <div><div class="serif" style="font-size:64px;line-height:1">8+</div><div class="label" style="margin-top:8px">Years in product design</div></div>
+        <div><div class="serif" style="font-size:64px;line-height:1">4</div><div class="label" style="margin-top:8px">Countries delivered in</div></div>
+      </div>
+      <div class="rule"></div>
+      <div class="label">What I do</div>
+      <ul class="clean">
+        <li>UX reviews and platform audits: usability, UI, accessibility, brand consistency</li>
+        <li>Product and interface design, from research to design systems</li>
+        <li>Mobile-first, low-bandwidth and offline-first experiences</li>
+        <li>Front-end build (HTML, CSS, JavaScript, WordPress) and coded prototypes</li>
+      </ul>
+      <div class="rule"></div>
+      <div class="label">Sectors</div>
+      <div style="margin-top:10px"><span class="tag">Digital health</span><span class="tag">Government</span><span class="tag">Fintech</span><span class="tag">AI products</span><span class="tag">Education</span></div>
+      <svg width="300" height="48" viewBox="0 0 400 64" fill="none" stroke="#111" style="margin-top:28px" aria-hidden="true"><circle cx="32" cy="32" r="30"/><path d="M110 62 A30 30 0 0 1 170 62 Z"/><rect x="200" y="2" width="60" height="60"/><path d="M290 62 L320 2 L350 62 Z"/><circle cx="380" cy="32" r="4" fill="#111"/></svg>
+    </div>
+  </div>
+</section>
+
+<!-- INDEX -->
+<section id="work">
+  <div class="wrap g-side">
+    <div class="rv">
+      <div class="eyebrow">Selected work</div>
+      <h2>Three case studies, one method, and the work I can&rsquo;t show.</h2>
+      <p class="small" style="color:var(--mute)">Much of my client work is under NDA. Walkthroughs of that work are available on request.</p>
+    </div>
+    <div class="idx rv">
+      <a href="#ardhisasa"><span class="n">01</span><span><span class="t">Ardhisasa</span><br><span class="small" style="color:var(--mute)">Kenya&rsquo;s national digital land platform · field app &amp; national launch</span></span><span class="label">Government</span></a>
+      <a href="#botswana"><span class="n">02</span><span><span class="t">Botswana EMR</span><br><span class="small" style="color:var(--mute)">Electronic medical records for Botswana&rsquo;s health facilities</span></span><span class="label">Digital health</span></a>
+      <a href="#easymeal"><span class="n">03</span><span><span class="t">EasyMeal</span><br><span class="small" style="color:var(--mute)">Workplace cafeteria meal booking app</span></span><span class="label">Consumer</span></a>
+      <a href="#method"><span class="n">04</span><span><span class="t">How I run a UX review</span><br><span class="small" style="color:var(--mute)">My method for independent, pre-launch platform reviews</span></span><span class="label">Method</span></a>
+      <a href="#nda"><span class="n">05</span><span><span class="t">Work under NDA</span><br><span class="small" style="color:var(--mute)">Open Chanjo, ADHN, SAIIL, FantasyCaster and more</span></span><span class="label">Index</span></a>
+    </div>
+  </div>
+</section>
+
+<!-- ARDHISASA -->
+<section class="white" id="ardhisasa">
+  <div class="wrap case-hero">
+    <div class="rv">
+      <div class="eyebrow">Case study 01 · Geo-Project Kenya</div>
+      <h2 style="font-size:clamp(46px,6vw,72px)">Ardhisasa</h2>
+      <p class="lead">Kenya&rsquo;s national digital land platform, giving citizens, professionals and government a single place to interact with land information and processes.</p>
+      <p>I was UI/UX Lead for the platform&rsquo;s Android applications, including the app field surveyors use to capture land data, and I led the team that built the app used to launch the platform nationally.</p>
+      <div class="meta">
+        <div><div class="label">Role</div><div class="small">UI/UX Lead · Project Lead (launch app)</div></div>
+        <div><div class="label">Client</div><div class="small">Ministry of Lands, Kenya</div></div>
+        <div><div class="label">Platforms</div><div class="small">Android (phone &amp; tablet), web</div></div>
+        <div><div class="label">Users</div><div class="small">Field surveyors, officers, citizens</div></div>
+      </div>
+    </div>
+    <div class="imgbox rv order-first"><img src="assets/img/ard_hero.jpg" alt="Ardhisasa Android app screens arranged around a phone showing the map-based landing screen" loading="lazy"></div>
+  </div>
+</section>
+
+<section>
+  <div class="wrap g-side" style="align-items:center">
+    <div class="rv">
+      <div class="eyebrow">Landing &amp; sign-in</div>
+      <h3>A visual language drawn from the land itself</h3>
+      <p>The app is used in the field, so the landing screen sits on a map background. The sign-in form is framed like a parcel of fenced land seen from above, and the sweeping curves borrow from sand dunes, rendered in the client&rsquo;s brand colours.</p>
+      <div class="rule"></div>
+      <div class="label">What I did</div>
+      <ul class="clean"><li>New concept for the landing and sign-in screens</li><li>Defined the colour palette for the app</li><li>Ran stakeholder feedback rounds and iterated</li></ul>
+    </div>
+    <div class="pair rv">
+      <figure><img src="assets/img/ard_sketch.jpg" alt="Hand-drawn sketch of the landing and sign-in screens" loading="lazy"><figcaption class="caption">Early sketch: map background, logo with loader, framed form</figcaption></figure>
+      <figure><img src="assets/img/ard_tablets.jpg" alt="Final Ardhisasa landing and sign-in screens on tablets" loading="lazy"><figcaption class="caption">Final landing and sign-in screens</figcaption></figure>
+    </div>
+  </div>
+</section>
+
+<section class="white">
+  <div class="wrap g-side">
+    <div class="rv">
+      <div class="eyebrow">Problem found in testing</div>
+      <h3>Surveyors couldn&rsquo;t tell how accurate their GPS fix was</h3>
+      <p>During testing, a surveyor reported that pinning exact coordinates was hard because the app gave no sense of GPS signal quality. Points were being saved without anyone knowing whether they could be trusted.</p>
+      <p>I worked with stakeholders and the Android team on a <strong style="font-weight:500">signal-strength scale</strong>, inspired by a pH scale, that slides from weak to strong in real time and shows satellites in view and in use. Every captured point also records its signal strength, so accuracy can be checked later.</p>
+      <div class="rule"></div>
+      <div class="label">Also redesigned</div>
+      <p class="small">The home screen: a greeting, counters for tasks assigned and completed, and tasks grouped by category, in the same visual language as sign-in.</p>
+    </div>
+    <div class="rv" style="display:grid;gap:24px">
+      <figure><img src="assets/img/ard_oldnew_loc.jpg" alt="Location capture screen before and after the redesign, with the new signal-strength scale" loading="lazy"><figcaption class="caption">Location capture: before and after</figcaption></figure>
+      <figure><img src="assets/img/ard_oldnew_home.jpg" alt="Home screen before and after the redesign" loading="lazy"><figcaption class="caption">Home screen: before and after</figcaption></figure>
+    </div>
+  </div>
+</section>
+
+<section class="dark">
+  <div class="wrap">
+    <div class="g-side launch">
+      <div class="rv">
+        <div class="eyebrow">Project lead</div>
+        <h3 style="font-size:clamp(32px,3.6vw,48px)">Designing the moment the platform went live</h3>
+        <p style="max-width:720px">Ardhisasa was launched by President Uhuru Kenyatta. We built a simple Android app for the occasion: pressing the launch button set off a countdown on the venue&rsquo;s large screens, followed by a video and confetti as the portal went live.</p>
+        <div class="cols3">
+          <div><div class="label">Project lead</div><p class="small">Assembled a team of three developers, set the timeline, defined the concept and requirements, and presented to stakeholders.</p></div>
+          <div><div class="label">UI/UX design</div><p class="small">Designed the launch app and the countdown experience from the requirements.</p></div>
+          <div><div class="label">Front-end</div><p class="small">Built the countdown website in HTML and JavaScript. The app ran on Android with a Python backend.</p></div>
+        </div>
+      </div>
+      <div class="rv"><img src="assets/img/ard_launch.jpg" alt="Ardhisasa launch app on a tablet with a large Launch button" loading="lazy"></div>
+    </div>
+    <figure class="rv" style="margin-top:40px"><div class="flow"><img src="assets/img/ard_flow.jpg" alt="Process flow: launch button pressed, backend signals the website, countdown begins, video plays, portal goes live" loading="lazy"></div><figcaption class="caption" style="color:#8d8a84">Launch process flow: button press, backend signal, countdown, video, live portal</figcaption></figure>
+  </div>
+</section>
+
+<!-- BOTSWANA -->
+<section class="white" id="botswana">
+  <div class="wrap case-hero bw">
+    <div class="imgbox rv" style="background:#eef1f6"><img src="assets/img/bw_phone.jpg" alt="Botswana EMR patient app screens on two phones" loading="lazy" style="margin:0 auto;max-height:640px;width:auto"></div>
+    <div class="rv">
+      <div class="eyebrow">Case study 02 · IntelliSOFT Kenya</div>
+      <h2 style="font-size:clamp(44px,5.5vw,68px)">Botswana EMR</h2>
+      <p class="lead">Replacing paper-based records in Botswana&rsquo;s health facilities with an electronic medical record built on OpenMRS.</p>
+      <p>Paper records were slow to work with, error-prone and hard to share between facilities. The challenge was to give clinicians and administrators a system faster than paper, with access to sensitive patient data tightly controlled.</p>
+      <div class="rule"></div>
+      <div class="label">My contribution</div>
+      <ul class="clean">
+        <li>Led design of the EMR dashboards and clinical workflows for clinicians and administrators</li>
+        <li>Designed role-based access and permission tiers with the development team</li>
+        <li>Designed the companion patient app for appointments and records</li>
+        <li>Built on a reusable, accessible component library shared across IntelliSOFT platforms</li>
+      </ul>
+      <p class="small" style="color:var(--mute);margin-top:18px">Clinical screens are confidential; a walkthrough is available on request.</p>
+    </div>
+  </div>
+</section>
+
+<!-- EASYMEAL -->
+<section id="easymeal">
+  <div class="wrap g-side">
+    <div class="rv">
+      <div class="eyebrow">Case study 03 · Contract</div>
+      <h2 style="font-size:clamp(44px,5.5vw,68px)">EasyMeal</h2>
+      <p class="lead">A cafeteria app that lets members of an organisation book their meals for the next day or the whole week.</p>
+      <p>I was contracted to design the app and create the concept for the Android build, from sketches of the sign-in, registration and home pages to final screens.</p>
+      <div class="meta">
+        <div><div class="label">Role</div><div class="small">Product &amp; UI design</div></div>
+        <div><div class="label">Platform</div><div class="small">Android</div></div>
+      </div>
+      <p class="small" style="margin-top:18px">A dark, food-first interface with a single orange action colour, so the next step is always obvious.</p>
+    </div>
+    <div class="rv" style="display:grid;gap:20px">
+      <img src="assets/img/em_hero.jpg" alt="EasyMeal app screens shown at an angle with the EasyMeal logo" loading="lazy">
+      <img src="assets/img/em_final.jpg" alt="Five final EasyMeal screens: register, login, welcome, menu and order with QR code" loading="lazy">
+    </div>
+  </div>
+</section>
+
+<!-- METHOD -->
+<section class="white" id="method">
+  <div class="wrap">
+    <div class="g2">
+      <div class="rv">
+        <div class="eyebrow">Independent UX review</div>
+        <h2>How I review a platform before launch</h2>
+        <p>I use the same method for website and platform reviews, most recently for ADHN&rsquo;s website assessment and SAIIL&rsquo;s UX review. The output is a short, prioritised list your team can act on, not a long report.</p>
+      </div>
+      <div class="steps rv">
+        <div><div class="num">01</div><b>Discovery</b><p class="small">Goals, users, launch timeline and constraints with your team.</p></div>
+        <div><div class="num">02</div><b>Usability</b><p class="small">Heuristic evaluation of key journeys, finding friction and error-prone steps.</p></div>
+        <div><div class="num">03</div><b>Experience</b><p class="small">Navigation, information architecture, content clarity, task completion.</p></div>
+        <div><div class="num">04</div><b>Interface &amp; access</b><p class="small">Hierarchy, components, responsiveness and WCAG 2.1 AA checks.</p></div>
+        <div><div class="num">05</div><b>Brand consistency</b><p class="small">Typography, colour, imagery, icons and tone across every screen.</p></div>
+        <div><div class="num">06</div><b>Report &amp; walkthrough</b><p class="small">Annotated findings ranked by priority, presented to your team.</p></div>
+      </div>
+    </div>
+    <div class="rv" style="margin-top:56px">
+      <div class="label" style="margin-bottom:12px">Example of the findings format</div>
+      <div class="table-scroll"><table>
+        <tr><th class="label">Priority</th><th class="label">Area</th><th class="label">Finding</th><th class="label">Recommendation</th></tr>
+        <tr><td>Before launch</td><td>Sign-up · Usability</td><td>Errors only appear after submitting the whole form</td><td>Validate inline, field by field, in plain language</td></tr>
+        <tr><td>Fix soon</td><td>Interface · Accessibility</td><td>Grey helper text fails WCAG contrast on white</td><td>Darken to meet the 4.5:1 contrast ratio and update the token</td></tr>
+        <tr><td>Later</td><td>Brand consistency</td><td>Three button styles used for the same primary action</td><td>Consolidate into one primary button component</td></tr>
+      </table></div>
+    </div>
+  </div>
+</section>
+
+<!-- NDA -->
+<section id="nda">
+  <div class="wrap g-side">
+    <div class="rv">
+      <div class="eyebrow">Not shown publicly</div>
+      <h2>The work I can&rsquo;t show</h2>
+      <p>Most of my recent work is covered by client confidentiality. I&rsquo;m happy to walk through any of these projects, including my role, decisions and outcomes, in a call.</p>
+      <svg width="286" height="176" viewBox="0 0 286 176" style="margin-top:36px" aria-hidden="true" id="dotgrid"></svg>
+    </div>
+    <div class="nda rv">
+      <div><div class="label">Digital health · Kenya</div><div class="serif">Open Chanjo</div><p class="small">National vaccination platform: dashboards for national and county administrators, and mobile-first data capture for field health workers.</p></div>
+      <div><div class="label">Digital health · Pan-African</div><div class="serif">ADHN</div><p class="small">Website assessment, migration and redesign for the Africa Digital Health Network, moving into a member platform.</p></div>
+      <div><div class="label">AI &amp; innovation · Africa</div><div class="serif">SAIIL</div><p class="small">UX and navigation review, an on-site resources library, and separate staff and public access to the sandbox/testbed.</p></div>
+      <div><div class="label">AI product · San Francisco</div><div class="serif">FantasyCaster</div><p class="small">Founding UI/UX designer: design system, broadcast platform UX and AI content pipelines for a 0-to-1 startup.</p></div>
+      <div><div class="label">Digital health · Kenya</div><div class="serif">PSS v2.0</div><p class="small">Pharmaceutical systems: simplified complex workflows and reusable patterns for data-heavy tables, analytics and forms.</p></div>
+      <div><div class="label">Digital health · Ethiopia</div><div class="serif">Bahir Dar eHospital</div><p class="small">Business analysis and UX for an ophthalmology EMR: patient records, supplies, staffing and scheduling.</p></div>
+      <div><div class="label">Security &amp; training</div><div class="serif">Kenvision Techniks</div><p class="small">Redesign with course application and payment, a student portal and a role-based admin portal.</p></div>
+      <div><div class="label">Consulting · Kenya</div><div class="serif">Smart Regional Consultants</div><p class="small">Rebrand and WordPress CMS rebuild with M-Pesa payments and event management.</p></div>
+      <div><div class="label">Fintech · Kenya</div><div class="serif">Tumizi</div><p class="small">Introduction video and full design handoff for a business spend and payout platform.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section class="dark" id="contact" style="padding-bottom:64px">
+  <div class="geo" style="right:-160px;top:-160px" aria-hidden="true"><svg width="640" height="640" viewBox="0 0 640 640" fill="none" stroke="#f2efe9"><circle cx="320" cy="320" r="110" opacity=".14"/><circle cx="320" cy="320" r="170" opacity=".14"/><circle cx="320" cy="320" r="230" opacity=".14"/><circle cx="320" cy="320" r="290" opacity=".14"/><circle cx="320" cy="320" r="50" fill="#f2efe9" stroke="none" opacity=".9"/></svg></div>
+  <div class="wrap" style="position:relative">
+    <div class="eyebrow">Let&rsquo;s talk</div>
+    <h2 style="font-size:clamp(48px,8vw,112px);line-height:.95">Have a platform that<br>needs a second look?</h2>
+    <div class="contact-grid">
+      <div><div class="label">Email</div><a href="mailto:samu625@gmail.com">samu625@gmail.com</a></div>
+      <div><div class="label">Phone</div><a href="tel:+254726865331">+254 726 865 331</a></div>
+      <div><div class="label">Portfolio PDF</div><a href="assets/Samuel_Muchiri_Portfolio_2026.pdf" download>Download (1.5 MB)</a></div>
+    </div>
+  </div>
+</section>
+<footer><div class="wrap"><span>&copy; 2026 Samuel Muchiri</span><span>Nairobi, Kenya · working worldwide</span></div></footer>
+
+<script>
+// dot grid (NDA)
+(function(){var s=document.getElementById('dotgrid'),ns='http://www.w3.org/2000/svg',h='';
+for(var c=0;c<13;c++)for(var r=0;r<8;r++)h+='<circle cx="'+(11+c*22)+'" cy="'+(11+r*22)+'" r="1.6" fill="#111" opacity=".35"/>';
+h+='<rect x="154" y="88" width="44" height="44" fill="#111"/>';s.innerHTML=h;})();
+// nav colour
+var nav=document.getElementById('nav'),hero=document.getElementById('top');
+function navState(){var past=window.scrollY>hero.offsetHeight-70;nav.classList.toggle('solid',past);nav.classList.toggle('on-dark',!past)}
+window.addEventListener('scroll',navState,{passive:true});navState();
+// reveal
+if('IntersectionObserver' in window){var io=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target)}})},{threshold:.12});
+document.querySelectorAll('.rv').forEach(function(el){io.observe(el)})}else{document.querySelectorAll('.rv').forEach(function(el){el.classList.add('in')})}
+</script>
+</body>
+</html>
