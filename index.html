@@ -24,7 +24,7 @@ body{font-family:'OutfitW',system-ui,sans-serif;color:var(--ink);background:var(
 img{display:block;max-width:100%;height:auto}
 a{color:inherit}
 .serif,h1,h2,h3{font-family:'Cormorant',Georgia,serif;font-weight:500;letter-spacing:-.01em}
-h1{font-size:clamp(64px,12vw,170px);line-height:.9}
+h1{font-size:clamp(64px,10.5vw,150px);line-height:.9}
 h2{font-size:clamp(38px,5vw,64px);line-height:1.04;margin-bottom:22px}
 h3{font-size:clamp(28px,3vw,40px);line-height:1.1;margin-bottom:14px}
 p{font-size:17px;line-height:1.65;font-weight:300}
@@ -110,11 +110,11 @@ footer .wrap{display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap}
 /* hydrangeas */
 .hydrangea-canvas{position:fixed;inset:0;width:100vw;height:100vh;pointer-events:none;z-index:5}
 .hy{position:absolute;pointer-events:none}
-.hy-hero{right:-60px;top:calc(50% - 90px);width:500px;height:500px;transform:translateY(-50%)}
+.hy-hero{right:20px;top:50%;width:520px;height:min(740px,86vh);transform:translateY(-46%)}
 .hy-about{right:-110px;bottom:20px;width:320px;height:320px}
 .hy-work{left:-90px;bottom:-70px;width:300px;height:300px}
 .hy-nda{left:calc(var(--pad) + 30px);bottom:40px;width:260px;height:260px}
-.hy-contact{right:-10px;top:-40px;width:400px;height:400px}
+.hy-contact{right:10px;top:20px;width:360px;height:560px}
 @media (max-width:900px){.hy-hero{right:-40px;top:auto;bottom:-50px;transform:none;width:210px;height:210px}.hy-contact{right:-80px;top:-60px;width:260px;height:260px}}
 
 /* reveal */
@@ -144,7 +144,7 @@ footer .wrap{display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap}
 
 <!-- HERO -->
 <section class="dark hero" id="top">
-  <div class="hy hy-hero" data-hydrangea data-stem="on" data-tilt="0.1"></div>
+  <div class="hy hy-hero" data-hydrangea data-mode="pair"></div>
   <div class="geo" style="right:-140px;top:50%;transform:translateY(-50%)" aria-hidden="true"><svg width="760" height="760" viewBox="0 0 760 760" fill="none" stroke="#f2efe9">
     <circle cx="380" cy="380" r="120" opacity=".16"/><circle cx="380" cy="380" r="200" opacity=".16"/><circle cx="380" cy="380" r="280" opacity=".16"/><circle cx="380" cy="380" r="360" opacity=".16"/>
     <line x1="380" y1="0" x2="380" y2="760" opacity=".12"/><line x1="0" y1="380" x2="760" y2="380" opacity=".12"/>
@@ -382,7 +382,7 @@ footer .wrap{display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap}
 
 <!-- CONTACT -->
 <section class="dark" id="contact" style="padding-bottom:64px">
-  <div class="hy hy-contact" data-hydrangea data-hydrangea-mobile="off" data-stem="on" data-tilt="0.25"></div>
+  <div class="hy hy-contact" data-hydrangea data-hydrangea-mobile="off" data-mode="stem" data-tone="lilac"></div>
   <div class="geo" style="right:-160px;top:-160px" aria-hidden="true"><svg width="640" height="640" viewBox="0 0 640 640" fill="none" stroke="#f2efe9"><circle cx="320" cy="320" r="110" opacity=".14"/><circle cx="320" cy="320" r="170" opacity=".14"/><circle cx="320" cy="320" r="230" opacity=".14"/><circle cx="320" cy="320" r="290" opacity=".14"/><circle cx="320" cy="320" r="50" fill="#f2efe9" stroke="none" opacity=".9"/></svg></div>
   <div class="wrap" style="position:relative">
     <div class="eyebrow">Let&rsquo;s talk</div>

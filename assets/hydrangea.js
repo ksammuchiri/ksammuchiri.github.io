@@ -64,24 +64,29 @@ function init() {
   })();
 
   // ---------- materials ----------
-  const glass = (light) => new THREE.MeshPhysicalMaterial({
+  const glass = (light) => { const gm = new THREE.MeshPhysicalMaterial({
     color: 0xffffff, metalness: 0.05, roughness: 0.06,
     transparent: true, opacity: light ? 0.72 : 0.58, depthWrite: false, side: THREE.DoubleSide,
     iridescence: 1, iridescenceIOR: 1.35, iridescenceThicknessRange: [180, 720],
     clearcoat: 1, clearcoatRoughness: 0.04, envMapIntensity: light ? 1.25 : 1.7,
-    specularIntensity: 1, sheen: 0.4, sheenColor: new THREE.Color(0xd8ccff)
-  });
-  const pearl = new THREE.MeshPhysicalMaterial({ color: 0xcfc4f2, roughness: 0.15, metalness: 0.1, clearcoat: 1, iridescence: 0.8, envMapIntensity: 1.4 });
+    specularIntensity: 1, sheen: 0.4, sheenColor: new THREE.Color(0xffe0ec)
+  }); gm.userData.base = gm.opacity; return gm; };
+  const pearl = new THREE.MeshPhysicalMaterial({ color: 0xe9cf6a, roughness: 0.2, metalness: 0.35, clearcoat: 1, envMapIntensity: 1.3 });
 
-  const palette = [0x7f9fe6, 0x9a9cea, 0xb595e2, 0xa9c0f0, 0xd4d8f7, 0x8fb0ea].map(c => new THREE.Color(c));
+  const tones = {
+    pink:  [0xf07f9f, 0xe46a8c, 0xf59ab2, 0xd8607f, 0xf7b3c4, 0xec7896],
+    lilac: [0xb59be8, 0xa18fe7, 0xc4a6ef, 0x9a9ee9, 0xd3bff3],
+    blue:  [0x8d9fe8, 0x7f97e3, 0x9aa9ee]          // the cool lower edge of the lilac head
+  };
+  const C = (arr) => arr.map(c => new THREE.Color(c));
+  const pal = { pink: C(tones.pink), lilac: C(tones.lilac), blue: C(tones.blue) };
 
   // seeded random so each bloom is the same on every visit
   const rng = (seed) => () => (seed = (seed * 16807) % 2147483647) / 2147483647;
 
-  function makeBloom(seed, light, withStem) {
+  function makeHead(seed, light, tone) {
     const rand = rng(seed);
-    const N = mobile ? 34 : 44;
-    const R = 1;
+    const N = mobile ? 52 : 80;
     const petals = new THREE.InstancedMesh(petalGeo, glass(light), N * 4);
     const centers = new THREE.InstancedMesh(pearlGeo, pearl, N);
     const m = new THREE.Matrix4(), f = new THREE.Matrix4(), pm = new THREE.Matrix4();
@@ -89,41 +94,70 @@ function init() {
     const golden = Math.PI * (3 - Math.sqrt(5));
     let k = 0;
     for (let i = 0; i < N; i++) {
-      // fibonacci points over a dome cap (front-facing, like a hydrangea head)
       const t = (i + 0.5) / N;
-      const z = 1 - t * 1.45;                 // cap down to ~123°
+      const z = 1 - t * 1.45;                 // dome cap, front-facing like a hydrangea head
       const r = Math.sqrt(Math.max(0, 1 - z * z));
       const a = i * golden;
       n.set(Math.cos(a) * r, Math.sin(a) * r, z).normalize();
       q.setFromUnitVectors(up, n);
-      const spin = new THREE.Quaternion().setFromAxisAngle(n, rand() * Math.PI * 2);
-      q.premultiply(spin);
-      const s = 0.27 + rand() * 0.07;
-      f.compose(n.clone().multiplyScalar(R + rand() * 0.06), q, new THREE.Vector3(s, s, s));
-      const col = palette[Math.floor(rand() * palette.length)];
+      q.premultiply(new THREE.Quaternion().setFromAxisAngle(n, rand() * Math.PI * 2));
+      const s = 0.25 + rand() * 0.06;
+      f.compose(n.clone().multiplyScalar(1 + rand() * 0.06), q, new THREE.Vector3(s, s, s));
+      let p = pal[tone] || pal.lilac;
+      if (tone === 'lilac' && n.y < -0.25 && n.x > -0.2 && rand() < 0.75) p = pal.blue;
+      const col = p[Math.floor(rand() * p.length)];
       for (let j = 0; j < 4; j++) {
         pm.makeRotationZ(j * Math.PI / 2 + (rand() - 0.5) * 0.2).multiply(new THREE.Matrix4().makeRotationX(-0.12 - rand() * 0.14));
         m.multiplyMatrices(f, pm);
         petals.setMatrixAt(k, m); petals.setColorAt(k, col); k++;
       }
-      m.compose(n.clone().multiplyScalar(R + 0.05), q, new THREE.Vector3(0.022, 0.022, 0.022));
+      m.compose(n.clone().multiplyScalar(1.05), q, new THREE.Vector3(0.026, 0.026, 0.026));
       centers.setMatrixAt(i, m);
     }
     petals.instanceMatrix.needsUpdate = true; petals.instanceColor.needsUpdate = true;
     const g = new THREE.Group(); g.add(petals, centers);
-    if (withStem) {
-      const leafMat = glass(light); leafMat.color = new THREE.Color(0xc4dccd); leafMat.opacity *= 0.85;
-      const curve = new THREE.CatmullRomCurve3([new THREE.Vector3(0, -0.55, -0.4), new THREE.Vector3(0.08, -1.5, -0.2), new THREE.Vector3(-0.05, -2.4, 0), new THREE.Vector3(0.12, -3.3, 0.1)]);
-      const stem = new THREE.Mesh(new THREE.TubeGeometry(curve, 48, 0.045, 10), leafMat);
-      g.add(stem);
-      const leaf = (sx, rotZ, at) => {
-        const m = new THREE.Mesh(leafGeo, leafMat);
-        const p = curve.getPoint(at); m.position.copy(p);
-        m.rotation.set(-0.5, 0, rotZ); m.scale.set(sx * 0.78, 0.78, 0.78);
-        g.add(m);
-      };
-      leaf(1, 0.95, 0.5); leaf(-1, -0.95, 0.62);
-    }
+    return g;
+  }
+
+  function stemMat(light) { const mm = glass(light); mm.color = new THREE.Color(0x6fae6c); mm.opacity = mm.userData.base = mm.opacity * 0.9; return mm; }
+  function addLeaf(g, mat, curve, at, side, size, lift) {
+    const leaf = new THREE.Mesh(leafGeo, mat);
+    leaf.position.copy(curve.getPoint(at));
+    leaf.rotation.set(-0.45 + (lift || 0), 0.25 * side, side * 1.05);
+    leaf.scale.set(side * size, size, size);
+    g.add(leaf);
+  }
+
+  // single stemmed head (contact)
+  function makeStemmed(seed, light, tone) {
+    const g = new THREE.Group();
+    g.add(makeHead(seed, light, tone));
+    const mat = stemMat(light);
+    const curve = new THREE.CatmullRomCurve3([new THREE.Vector3(0, -0.55, -0.4), new THREE.Vector3(0.08, -1.5, -0.2), new THREE.Vector3(-0.05, -2.4, 0), new THREE.Vector3(0.12, -3.3, 0.1)]);
+    g.add(new THREE.Mesh(new THREE.TubeGeometry(curve, 48, 0.045, 10), mat));
+    addLeaf(g, mat, curve, 0.5, 1, 0.78); addLeaf(g, mat, curve, 0.62, -1, 0.78);
+    return g;
+  }
+
+  // the pair: pink head left, lilac-blue head right, stems crossing below, leaves in opposite pairs
+  function makePair(seed, light) {
+    const g = new THREE.Group();
+    const pink = makeHead(seed, light, 'pink');  pink.position.set(-0.78, 1.05, 0.15); pink.scale.setScalar(1.28);
+    const lil  = makeHead(seed + 31, light, 'lilac'); lil.position.set(1.1, 0.62, -0.35); lil.scale.setScalar(1.18); lil.rotation.y = -0.25;
+    g.add(pink, lil);
+    const mat = stemMat(light);
+    const sPink = new THREE.CatmullRomCurve3([new THREE.Vector3(-0.5, 0.1, -0.2), new THREE.Vector3(-0.15, -0.9, 0), new THREE.Vector3(0.18, -2.0, 0.05), new THREE.Vector3(0.32, -3.3, 0.05)]);
+    const sLil  = new THREE.CatmullRomCurve3([new THREE.Vector3(0.75, -0.25, -0.4), new THREE.Vector3(0.45, -1.1, -0.15), new THREE.Vector3(0.08, -2.1, 0), new THREE.Vector3(-0.08, -3.4, 0)]);
+    g.add(new THREE.Mesh(new THREE.TubeGeometry(sPink, 60, 0.05, 10), mat));
+    g.add(new THREE.Mesh(new THREE.TubeGeometry(sLil, 60, 0.045, 10), mat));
+    // thin pedicels fanning up into each head, as in the painting
+    [[-0.9, 0.55], [-0.45, 0.6], [-0.1, 0.5]].forEach(([x, y]) => g.add(new THREE.Mesh(new THREE.TubeGeometry(new THREE.CatmullRomCurve3([sPink.getPoint(0.05), new THREE.Vector3(x, y, 0)]), 8, 0.018, 6), mat)));
+    [[0.55, 0.2], [0.95, 0.05], [1.3, 0.15]].forEach(([x, y]) => g.add(new THREE.Mesh(new THREE.TubeGeometry(new THREE.CatmullRomCurve3([sLil.getPoint(0.05), new THREE.Vector3(x, y, -0.2)]), 8, 0.016, 6), mat)));
+    addLeaf(g, mat, sPink, 0.1, -1, 0.95, 0.1); addLeaf(g, mat, sPink, 0.14, 1, 0.8);
+    addLeaf(g, mat, sPink, 0.46, -1, 0.9); addLeaf(g, mat, sPink, 0.5, 1, 0.82, 0.15);
+    addLeaf(g, mat, sLil, 0.12, 1, 0.8); addLeaf(g, mat, sLil, 0.34, 1, 0.92, 0.1);
+    addLeaf(g, mat, sLil, 0.38, -1, 0.78); addLeaf(g, mat, sLil, 0.62, 1, 0.7);
+    g.position.y = 0;   // visual centre roughly at y = -0.9; handled when positioning
     return g;
   }
 
@@ -132,10 +166,14 @@ function init() {
     .filter(el => !mobile || el.dataset.hydrangeaMobile !== 'off')
     .map((el, i) => {
       const light = !el.closest('.dark');
-      const obj = makeBloom(1234 + i * 977, light, el.dataset.stem === 'on' && !mobile);
+      const tone = el.dataset.tone || (i % 2 ? 'pink' : 'lilac');
+      const mode = mobile ? 'head' : (el.dataset.mode || 'head');
+      const obj = mode === 'pair' ? makePair(1234 + i * 977, light) : mode === 'stem' ? makeStemmed(1234 + i * 977, light, tone) : makeHead(1234 + i * 977, light, tone);
+      obj.userData.mode = mode;
+      const mats = new Set(); obj.traverse(o => { if (o.material && o.material.transparent) mats.add(o.material); });
       const tilt = parseFloat(el.dataset.tilt || '0');
       scene.add(obj);
-      return { el, obj, sec: el.closest('section') || document.body, phase: i * 1.7, tilt, seen: 0, visible: false };
+      return { el, obj, mats: [...mats], sec: el.closest('section') || document.body, phase: i * 1.7, tilt, seen: 0, visible: false };
     });
 
   const io = new IntersectionObserver(es => es.forEach(e => {
@@ -167,17 +205,24 @@ function init() {
       const size = Math.min(r.width, r.height);
       b.seen = Math.min(1, b.seen + (reduce ? 1 : 0.025));
       const ease = 1 - Math.pow(1 - b.seen, 3);
-      const sc = (size / 2.6) * (0.75 + 0.25 * ease);
-      const bob = reduce ? 0 : Math.sin(t * 0.6 + b.phase) * size * 0.02;
-      b.obj.position.set(r.left + r.width / 2, -(r.top + r.height / 2) + bob, 0);
-      b.obj.scale.setScalar(sc);
+      const mode = b.obj.userData.mode;
+      const grow = 0.75 + 0.25 * ease;
       const sway = reduce ? 0 : Math.sin(t * 0.35 + b.phase) * 0.18;
-      b.obj.rotation.set(
-        -0.35 + b.tilt + my * 0.4 + sway * 0.4 + vel * 0.004,
-        sway + mx * 0.6 + (reduce ? 0 : t * 0.08) + b.phase,
-        Math.sin(t * 0.25 + b.phase) * 0.06
-      );
-      b.obj.children[0].material.opacity = (b.el.closest('.dark') ? 0.58 : 0.72) * ease;
+      const bob = reduce ? 0 : Math.sin(t * 0.6 + b.phase) * size * 0.015;
+      let sc, cy = 0;
+      if (mode === 'pair') { sc = r.height / 6.2 * grow; cy = 0.55; }
+      else if (mode === 'stem') { sc = r.height / 4.7 * grow; cy = 1.1; }
+      else sc = (size / 2.6) * grow;
+      b.obj.position.set(r.left + r.width / 2, -(r.top + r.height / 2) + bob + cy * sc, 0);
+      b.obj.scale.setScalar(sc);
+      if (mode === 'head') {
+        b.obj.rotation.set(-0.35 + b.tilt + my * 0.4 + sway * 0.4 + vel * 0.004,
+          sway + mx * 0.6 + (reduce ? 0 : t * 0.08) + b.phase, Math.sin(t * 0.25 + b.phase) * 0.06);
+      } else {   // stemmed blooms sway like they're in a breeze, no full spin
+        b.obj.rotation.set(-0.08 + b.tilt + my * 0.2 + vel * 0.002,
+          sway * 0.9 + mx * 0.45, Math.sin(t * 0.3 + b.phase) * 0.04 - mx * 0.05);
+      }
+      b.mats.forEach(m => { m.opacity = m.userData.base * ease; });
       // clip the bloom to its own section so it never spills into the next one
       const sr = b.sec.getBoundingClientRect();
       const top = Math.max(0, sr.top), bottom = Math.min(innerHeight, sr.bottom);
